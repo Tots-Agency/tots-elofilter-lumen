@@ -59,6 +59,7 @@ class QueryRequest
     {
         $this->wheres[] = FactoryWhere::create(array(
             'type' => AbstractWhere::TYPE_NEXT_EVENT,
+            'key' => $key,
             'with_time' => $withTime,
         ));
     }
@@ -73,6 +74,7 @@ class QueryRequest
     {
         $this->wheres[] = FactoryWhere::create(array(
             'type' => AbstractWhere::TYPE_PASS_EVENT,
+            'key' => $key,
             'with_time' => $withTime,
         ));
     }
@@ -102,6 +104,21 @@ class QueryRequest
     {
         $this->wheres[] = FactoryWhere::create(array(
             'type' => AbstractWhere::TYPE_DATE,
+            'key' => $key,
+            'value' => $value
+        ));
+    }
+    /**
+     * Add whereRaw with keys
+     *
+     * @param array $keys
+     * @param mixed $value
+     * @return void
+     */
+    public function addWhereIn($key, $value)
+    {
+        $this->wheres[] = FactoryWhere::create(array(
+            'type' => AbstractWhere::TYPE_IN,
             'key' => $key,
             'value' => $value
         ));
