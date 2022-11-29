@@ -3,6 +3,7 @@
 namespace Tots\EloFilter;
 
 use Illuminate\Http\Request;
+use Tots\EloFilter\Where\AbstractWhere;
 use Tots\EloFilter\Where\FactoryWhere;
 
 class QueryRequest
@@ -32,6 +33,167 @@ class QueryRequest
     {
         $this->request = $request;
         $this->processRequest();
+    }
+
+    /**
+     * Agregar un where a la query
+     * @param string $key
+     * @param mixed $value
+     */
+    public function addWhere($key, $value)
+    {
+        $this->wheres[] = FactoryWhere::create(array(
+            'type' => AbstractWhere::TYPE_EQUAL,
+            'key' => $key,
+            'value' => $value
+        ));
+    }
+    /**
+     * 
+     *
+     * @param array $key
+     * @param boolean $withTime
+     * @return void
+     */
+    public function addWhereNextEvents($key, $withTime = false)
+    {
+        $this->wheres[] = FactoryWhere::create(array(
+            'type' => AbstractWhere::TYPE_NEXT_EVENT,
+            'with_time' => $withTime,
+        ));
+    }
+    /**
+     * 
+     *
+     * @param array $key
+     * @param boolean $withTime
+     * @return void
+     */
+    public function addWherePassEvents($key, $withTime = false)
+    {
+        $this->wheres[] = FactoryWhere::create(array(
+            'type' => AbstractWhere::TYPE_PASS_EVENT,
+            'with_time' => $withTime,
+        ));
+    }
+    /**
+     * Add whereRaw with keys
+     *
+     * @param array $keys
+     * @param mixed $value
+     * @return void
+     */
+    public function addWhereLikes($keys, $value)
+    {
+        $this->wheres[] = FactoryWhere::create(array(
+            'type' => AbstractWhere::TYPE_LIKES,
+            'keys' => $keys,
+            'value' => $value
+        ));
+    }
+    /**
+     * Add whereRaw with keys
+     *
+     * @param string $key
+     * @param string $value
+     * @return void
+     */
+    public function addWhereDate($key, $value)
+    {
+        $this->wheres[] = FactoryWhere::create(array(
+            'type' => AbstractWhere::TYPE_DATE,
+            'key' => $key,
+            'value' => $value
+        ));
+    }
+    /**
+     * Elimina un where del listado
+     * @param string $key
+     */
+    public function removeWhere($key)
+    {
+        $this->wheres = array_filter($this->wheres, function($w) use ($key){
+            if(!$w->isSameKey($key)){
+                return true;
+            }
+        });
+    }
+    /**
+     * Undocumented function
+     *
+     * @param [type] $key
+     * @param [type] $type
+     */
+    public function removeWhereWithType($key, $type)
+    {
+        $data = [];
+        foreach($this->wheres as $wherObj) {
+            if($wherObj->getType() != $type||($wherObj->getType() == $type && !$wherObj->isSameKey($key))){
+                $data[] = $wherObj;
+            }
+        }
+        $this->wheres = $data;
+    }
+    /**
+     *
+     * @param [type] $type
+     */
+    public function removeWhereAllType($type)
+    {
+        $data = [];
+        foreach($this->wheres as $wherObj) {
+            if($wherObj->getType() != $type){
+                $data[] = $wherObj;
+            }
+        }
+        $this->wheres = $data;
+    }
+    /**
+     * Valida si el KEY existe en un where
+     *
+     * @param string $key
+     * @return boolean
+     */
+    public function hasWhere($key)
+    {
+        foreach($this->wheres as $where) {
+            if($where->isSameKey($key)){
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * Devuelve un array con todos los Wheres que coincidan con el KEY
+     *
+     * @param string $key
+     * @return array
+     */
+    public function getWheresByKey($key)
+    {
+        $data = [];
+        foreach($this->wheres as $wherObj) {
+            if($wherObj->isSameKey($key)){
+                $data[] = $wherObj;
+            }
+        }
+        return $data;
+    }
+    /**
+     * Devuelve un array con todos los Wheres que coincidan con el TYPE
+     *
+     * @param string $key
+     * @return array
+     */
+    public function getWheresByType($type)
+    {
+        $data = [];
+        foreach($this->wheres as $wherObj) {
+            if(is_a($wherObj, $type)){
+                $data[] = $wherObj;
+            }
+        }
+        return $data;
     }
 
     protected function processWheres($wheres)

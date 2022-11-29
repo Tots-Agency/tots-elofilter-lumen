@@ -51,6 +51,14 @@ class Query
     }
     /**
      *
+     * @return QueryRequest
+     */
+    public function getQueryRequest()
+    {
+        return $this->request;
+    }
+    /**
+     *
      * @param string $modelClass
      * @return void
      */
