@@ -28,6 +28,11 @@ class QueryRequest
      * @var array
      */
     protected $wheres = array();
+    /**
+     * Almacena todos los joins de la query
+     * @var array
+     */
+    protected $joins = array();
 
     public function __construct(Request $request)
     {
@@ -35,6 +40,15 @@ class QueryRequest
         $this->processRequest();
     }
 
+    /**
+     * Agregar un join a la query
+     * @param string $key
+     * @param mixed $value
+     */
+    public function addJoin($table, $tableColumn, $tableRelation)
+    {
+        $this->joins[] = array('table' => $table, 'column_table' => $tableColumn, 'column_relation' => $tableRelation);
+    }
     /**
      * Agregar un where a la query
      * @param string $key
@@ -281,5 +295,13 @@ class QueryRequest
     public function getWheres()
     {
         return $this->wheres;
+    }
+    /**
+     *
+     * @return array
+     */
+    public function getJoins()
+    {
+        return $this->joins;
     }
 }

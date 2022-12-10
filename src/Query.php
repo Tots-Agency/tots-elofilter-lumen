@@ -25,6 +25,10 @@ class Query
         foreach($this->request->getWheres() as $where){
             $where->run($query);
         }
+        // Configuramos los Joins
+        foreach($this->request->getJoins() as $join){
+            $query->join($join['table'], $join['column_table'], '=', $join['column_relation']);
+        }
 
         //return $query->paginate($configure->getLimit(), ['*'], 'page', $configure->getPage())
         return $query->paginate($this->getPerPage(), ['*'], 'page', $this->getPage());
