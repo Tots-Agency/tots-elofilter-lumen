@@ -33,6 +33,11 @@ class QueryRequest
      * @var array
      */
     protected $joins = array();
+    /**
+     * Almacena las relaciones
+     * @var array
+     */
+    protected $withs = array();
 
     public function __construct(Request $request)
     {
@@ -237,6 +242,7 @@ class QueryRequest
         // Get normal params
         $this->page = $this->request->input('page', 1);
         $this->perPage = $this->request->input('per_page', 50);
+        $this->withs = $this->request->input('withs', []);
         $this->processData();
         $this->processDataString();
     }
@@ -303,5 +309,13 @@ class QueryRequest
     public function getJoins()
     {
         return $this->joins;
+    }
+    /**
+     *
+     * @return array
+     */
+    public function getWiths()
+    {
+        return $this->withs;
     }
 }

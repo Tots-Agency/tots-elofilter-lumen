@@ -30,6 +30,9 @@ class Query
             $query->join($join['table'], $join['column_table'], '=', $join['column_relation']);
         }
 
+        // Configuramos Relaciones
+        $query->with($this->request->getWiths());
+
         //return $query->paginate($configure->getLimit(), ['*'], 'page', $configure->getPage())
         return $query->paginate($this->getPerPage(), ['*'], 'page', $this->getPage());
     }
