@@ -242,7 +242,12 @@ class QueryRequest
         // Get normal params
         $this->page = $this->request->input('page', 1);
         $this->perPage = $this->request->input('per_page', 50);
+
         $this->withs = $this->request->input('withs', []);
+        if($this->withs == ''){
+            $this->withs = [];
+        }
+
         $this->processData();
         $this->processDataString();
     }
