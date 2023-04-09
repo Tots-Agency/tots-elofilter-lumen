@@ -23,6 +23,7 @@ class FactoryWhere
         AbstractWhere::TYPE_IN => InWhere::class,
         AbstractWhere::TYPE_GREATER_THAN => GreaterThanWhere::class,
         AbstractWhere::TYPE_LESS_THAN => LessThanWhere::class,
+        AbstractWhere::TYPE_NULL => NullWhere::class,
     ];
     /**
      * Create where

@@ -22,6 +22,7 @@ abstract class AbstractWhere
     const TYPE_IN = 'in';
     const TYPE_GREATER_THAN = 'greater-than';
     const TYPE_LESS_THAN = 'less-than';
+    const TYPE_NULL = 'null';
     /**
      * Type of where
      *
