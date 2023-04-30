@@ -29,6 +29,10 @@ class Query
         foreach($this->request->getJoins() as $join){
             $query->join($join['table'], $join['column_table'], '=', $join['column_relation']);
         }
+        // Configuramos los orders
+        foreach($this->request->getOrders() as $order){
+            $query->orderBy($order['field'], $order['type']);
+        }
 
         // Configuramos Relaciones
         $query->with($this->request->getWiths());

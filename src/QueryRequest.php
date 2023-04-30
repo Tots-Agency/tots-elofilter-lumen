@@ -38,6 +38,11 @@ class QueryRequest
      * @var array
      */
     protected $withs = array();
+    /**
+     * Almacena los orders
+     * @var array
+     */
+    protected $orders = array();
 
     public function __construct(Request $request)
     {
@@ -232,6 +237,26 @@ class QueryRequest
         return $data;
     }
 
+    /**
+     * Agregar un order a la query
+     * @param string $key
+     * @param string $type
+     */
+    public function addOrder($key, $type)
+    {
+        $this->orders[] = array('field' => $key, 'type' => $type);
+    }
+
+    public function addOrderAsc($key)
+    {
+        $this->orders[] = array('field' => $key, 'type' => 'asc');
+    }
+
+    public function addOrderDesc($key)
+    {
+        $this->orders[] = array('field' => $key, 'type' => 'desc');
+    }
+
     protected function processWheres($wheres)
     {
         $this->wheres = FactoryWhere::createAll($wheres);
@@ -268,6 +293,10 @@ class QueryRequest
         if(isset($jsonObj->wheres) && is_array($jsonObj->wheres)){
             $this->processWheres($jsonObj->wheres);
         }
+
+        if(isset($jsonObj->orders) && is_array($jsonObj->orders)){
+            $this->orders = $jsonObj->orders;
+        }
     }
 
     protected function processData()
@@ -287,6 +316,10 @@ class QueryRequest
 
         if(isset($jsonObj->wheres) && is_array($jsonObj->wheres)){
             $this->processWheres($jsonObj->wheres);
+        }
+
+        if(isset($jsonObj->orders) && is_array($jsonObj->orders)){
+            $this->orders = $jsonObj->orders;
         }
     }
 
@@ -322,5 +355,13 @@ class QueryRequest
     public function getWiths()
     {
         return $this->withs;
+    }
+    /**
+     *
+     * @return array
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }
