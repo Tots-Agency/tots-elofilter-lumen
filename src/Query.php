@@ -31,7 +31,8 @@ class Query
         }
         // Configuramos los orders
         foreach($this->request->getOrders() as $order){
-            $query->orderBy($order['field'], $order['type']);
+            $orderArray = (array)$order;
+            $query->orderBy($orderArray['field'], $orderArray['type']);
         }
 
         // Configuramos Relaciones
