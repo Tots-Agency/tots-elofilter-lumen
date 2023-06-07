@@ -342,11 +342,29 @@ class QueryRequest
     }
     /**
      *
+     * @param array $wheres
+     * @return void
+     */
+    public function setWheresByFactory($wheres)
+    {
+        $this->wheres = FactoryWhere::createAll($wheres);
+    }
+    /**
+     *
      * @return array
      */
     public function getJoins()
     {
         return $this->joins;
+    }
+    /**
+     *
+     * @param array $joins
+     * @return void
+     */
+    public function setJoins($joins)
+    {
+        $this->joins = $joins;
     }
     /**
      *
@@ -363,5 +381,14 @@ class QueryRequest
     public function getOrders()
     {
         return $this->orders;
+    }
+    /**
+     *
+     * @param array $orders
+     * @return void
+     */
+    public function setOrders($orders)
+    {
+        $this->orders = $orders;
     }
 }

@@ -1,7 +1,7 @@
 {
     "name": "tots/elofilter-lumen",
     "description": "The library for Lumen PHP",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "type": "library",
     "license": "MIT",
     "autoload": {
