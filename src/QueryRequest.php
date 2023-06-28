@@ -270,7 +270,7 @@ class QueryRequest
 
         $withs = $this->request->input('withs', []);
         // Verify has ,
-        if(is_string($withs)){
+        if(is_string($withs) && $withs != ''){
             $this->withs = explode(',', $withs);
         }
         if($this->withs == ''){
