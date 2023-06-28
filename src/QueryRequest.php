@@ -268,7 +268,11 @@ class QueryRequest
         $this->page = $this->request->input('page', 1);
         $this->perPage = $this->request->input('per_page', 50);
 
-        $this->withs = $this->request->input('withs', []);
+        $withs = $this->request->input('withs', []);
+        // Verify has ,
+        if(is_string($withs)){
+            $this->withs = explode(',', $withs);
+        }
         if($this->withs == ''){
             $this->withs = [];
         }
