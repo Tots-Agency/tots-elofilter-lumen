@@ -73,6 +73,14 @@ class QueryRequest
         ));
     }
     /**
+     * Agregar un where objeto a la query
+     * @param AbstractWhere $where
+     */
+    public function addWhereFactored($where)
+    {
+        $this->wheres[] = $where;
+    }
+    /**
      * 
      *
      * @param array $key
