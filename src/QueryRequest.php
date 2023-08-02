@@ -73,6 +73,28 @@ class QueryRequest
         ));
     }
     /**
+     * Agregar un where a la query
+     * @param string $key
+     */
+    public function addWhereNull($key)
+    {
+        $this->wheres[] = FactoryWhere::create(array(
+            'type' => AbstractWhere::TYPE_NULL,
+            'key' => $key
+        ));
+    }
+    /**
+     * Agregar un where a la query
+     * @param string $key
+     */
+    public function addWhereNotNull($key)
+    {
+        $this->wheres[] = FactoryWhere::create(array(
+            'type' => AbstractWhere::TYPE_NOT_NULL,
+            'key' => $key
+        ));
+    }
+    /**
      * Agregar un where objeto a la query
      * @param AbstractWhere $where
      */
